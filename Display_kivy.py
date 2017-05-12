@@ -37,8 +37,6 @@ label_slider = Label(text='5 sec' ,size_hint=(0.85,0.10))
 
 label_status = Label(text='Standby',size_hint=(1,0.15))
 
-##progress_bar= ProgressBar(max = 100, size_hint= (1, 0.1))
-
 slider_bar_dB=Slider(min =0, max=15, value=10,step =1,size_hint=(1,0.10))
 
 slider_bar=Slider(min =1, max=30, value=5,step =1,size_hint=(0.85,0.10))
@@ -52,11 +50,8 @@ class TestApp(App):
     
     def btn_record_event(instance):
 
-##        progress_bar.value = 0
         label_status.text = 'Recording for ' +label_slider.text
         audio.record_4_mic(int(slider_bar.value))
-##        mythread = threading.Thread(target = audio.record_4_mic(int(slider_bar.value)))
-##        mythread.start()
         
         label_status.text = 'Recorded for ' +label_slider.text
         
@@ -70,11 +65,6 @@ class TestApp(App):
             audio.bessel_bandpass_filter("./file3.wav", "file3_filtered.wav")
             audio.bessel_bandpass_filter("./file4.wav", "file4_filtered.wav")
 
-##            file1 = scipy.io.wavfile.read("./file1_filtered.wav")
-##            file2 = scipy.io.wavfile.read("./file2_filtered.wav")
-##            file3 = scipy.io.wavfile.read("./file3_filtered.wav")
-##            file4 = scipy.io.wavfile.read("./file4_filtered.wav")
-
             file1 = AudioSegment.from_file("./file1_filtered.wav")
             file2 = AudioSegment.from_file("./file2_filtered.wav")
             file3 = AudioSegment.from_file("./file3_filtered.wav")
@@ -84,22 +74,16 @@ class TestApp(App):
             
             
         else:
-            # Play filtered
-##            file1 = scipy.io.wavfile.read("./file1_filtered.wav")
-##            file2 = scipy.io.wavfile.read("./file2_filtered.wav")
-##            file3 = scipy.io.wavfile.read("./file3_filtered.wav")
-##            file4 = scipy.io.wavfile.read("./file4_filtered.wav")
+            # Play unfiltered
 
             file1 = AudioSegment.from_file("./file1.wav")
             file2 = AudioSegment.from_file("./file2.wav") 
             file3 = AudioSegment.from_file("./file3.wav") 
             file4 = AudioSegment.from_file("./file4.wav") 
             
-##        s = file1[1] + (file2[1]*-1) + file3[1] + (file4[1] *-1)
-##      s = file1[1] + (file2[1]) + file3[1] + (file4[1])
-##        scipy.io.wavfile.write("file_2neg.wav",file2[0], file2[1]*-1)
-        
-        
+
+       
+        # combine files
         combined = file1.overlay(file2)
         combined = file3.overlay(combined)
         combined = (file4.overlay(combined))
@@ -112,9 +96,7 @@ class TestApp(App):
 
             pg.mixer.init()
             pg.init()
-            
-            
-    ##        audio.write_wav(combined, "./output2.wav")
+           
            
             pg.mixer.set_num_channels(50) 
             pg.mixer.music.load("output.wav")
@@ -143,8 +125,7 @@ class TestApp(App):
         
         
     def build(self):
-        #return Test()
-        
+
     
         layout = StackLayout()
 
@@ -171,13 +152,8 @@ class TestApp(App):
         layout.add_widget(btn_play)
         layout.add_widget(label_status)
 
-##        layout.add_widget(progress_bar)
-        
-##        layout.add_widget(Button(text='Hello 6',size_hint=(None,0.15)))
-##        layout.add_widget(Button(text='Hello 7',size_hint=(None,0.15)))
-        return layout
-        #return Button(text ='Hello World')
 
-##AppWindow.fullscreen = True       
+        return layout
+  
 TestApp().run()
-#button = Button(text = 'Hello World' , font_size = 14) 
+
