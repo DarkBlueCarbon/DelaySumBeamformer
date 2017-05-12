@@ -131,7 +131,7 @@ def bessel_bandpass_filter(inputfile, outputfile):
     ww = wave.open(outputfile, 'w')
     ww.setparams(tuple(par)) # Use the same parameters as the input file.
 
-    lowpass = 200 # Remove lower frequencies.
+    lowpass = 100 # Remove lower frequencies.
     highpass = 1500 # Remove higher frequencies.
 
     sz = wr.getframerate() # Read and process 1 second at a time.
